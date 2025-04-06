@@ -75,7 +75,7 @@ const Sidebar = ({ className }: SidebarProps) => {
     { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { label: 'Analytics', icon: PieChart, path: '/analytics' },
     { label: 'Reports', icon: FileText, path: '/reports' },
-    { label: 'Customers', icon: Users, path: '#' },
+    { label: 'Customers', icon: Users, path: '/customers' },
     { label: 'Messages', icon: Mail, path: '#' },
     { label: 'Notifications', icon: Bell, path: '#' },
     { label: 'Calendar', icon: Calendar, path: '#' },
