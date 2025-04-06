@@ -13,8 +13,10 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  PieChart,
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface NavItemProps {
   icon: React.ElementType;
@@ -22,9 +24,21 @@ interface NavItemProps {
   active?: boolean;
   collapsed?: boolean;
   onClick?: () => void;
+  path?: string;
 }
 
-const NavItem = ({ icon: Icon, label, active, collapsed, onClick }: NavItemProps) => {
+const NavItem = ({ icon: Icon, label, active, collapsed, onClick, path }: NavItemProps) => {
+  const navigate = useNavigate();
+  
+  const handleClick = () => {
+    if (path) {
+      navigate(path);
+    }
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
     <Button
       variant="ghost"
@@ -32,7 +46,7 @@ const NavItem = ({ icon: Icon, label, active, collapsed, onClick }: NavItemProps
         'w-full justify-start gap-3 px-3 py-2 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
         active && 'bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground'
       )}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <Icon className="h-5 w-5" />
       {!collapsed && <span>{label}</span>}
@@ -46,8 +60,8 @@ interface SidebarProps {
 
 const Sidebar = ({ className }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [activeItem, setActiveItem] = useState('Dashboard');
   const isMobile = useIsMobile();
+  const location = useLocation();
 
   // Always show expanded sidebar on mobile
   const isCollapsed = isMobile ? false : collapsed;
@@ -57,13 +71,14 @@ const Sidebar = ({ className }: SidebarProps) => {
   };
 
   const navItems = [
-    { label: 'Dashboard', icon: LayoutDashboard },
-    { label: 'Analytics', icon: BarChart },
-    { label: 'Customers', icon: Users },
-    { label: 'Messages', icon: Mail },
-    { label: 'Notifications', icon: Bell },
-    { label: 'Calendar', icon: Calendar },
-    { label: 'Settings', icon: Settings },
+    { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+    { label: 'Analytics', icon: PieChart, path: '/analytics' },
+    { label: 'Reports', icon: BarChart, path: '#' },
+    { label: 'Customers', icon: Users, path: '#' },
+    { label: 'Messages', icon: Mail, path: '#' },
+    { label: 'Notifications', icon: Bell, path: '#' },
+    { label: 'Calendar', icon: Calendar, path: '#' },
+    { label: 'Settings', icon: Settings, path: '#' },
   ];
 
   return (
@@ -96,9 +111,9 @@ const Sidebar = ({ className }: SidebarProps) => {
               key={item.label}
               icon={item.icon}
               label={item.label}
-              active={activeItem === item.label}
+              active={location.pathname === item.path}
               collapsed={isCollapsed}
-              onClick={() => setActiveItem(item.label)}
+              path={item.path}
             />
           ))}
         </nav>
