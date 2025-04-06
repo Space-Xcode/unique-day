@@ -14,6 +14,7 @@ import {
   ChevronLeft,
   ChevronRight,
   PieChart,
+  FileText,
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -73,7 +74,7 @@ const Sidebar = ({ className }: SidebarProps) => {
   const navItems = [
     { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { label: 'Analytics', icon: PieChart, path: '/analytics' },
-    { label: 'Reports', icon: BarChart, path: '#' },
+    { label: 'Reports', icon: FileText, path: '/reports' },
     { label: 'Customers', icon: Users, path: '#' },
     { label: 'Messages', icon: Mail, path: '#' },
     { label: 'Notifications', icon: Bell, path: '#' },
